@@ -1,0 +1,92 @@
+@import "var";
+.pad(@padding){
+  padding-left:@padding;
+  padding-right:@padding;
+}
+.clearfix:after{
+  content: "";
+  width: 100%;
+  display: inline-block;
+  clear: both;
+  height: 0;
+}
+.clf:before,.clf {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  /*line-height:0;
+  font-size:0;*/
+  height:0;
+}
+.img-response{
+  max-width:100%;
+  height:auto;
+  display:block;
+}
+.container{
+  &{
+    height:auto;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    display:block;
+    .pad(@padding);
+  }
+  &-fluid{
+    height:auto;
+    .pad(@padding);
+  }
+  & .row,&-fluid .row{
+    margin-left:-@padding;
+    margin-right:-@padding;
+    height:auto;
+  }
+  & .row:after,&-fluid .row:after{
+    content:"";
+    display:block;
+    clear:both;
+    line-height:0;
+    height:0;
+    font-size:0;
+  }
+}
+.grid(@type,@i:1) when (@i<=@cols){
+  .col-@{type}-@{i}{
+    width:100%/@cols*@i;
+    display:block;
+    float:left;
+    .pad(@padding);
+  }
+  .grid(@type,@i+1);
+}
+.grid(xs);
+.g(@width,@name){
+    @media screen and (min-width:@width){
+      .container{
+        width:@width - @padding*2;
+      }
+      .grid(@name);
+    }
+}
+/*屏幕>768px 平板*/
+.g(@smscreen,sm);
+//屏幕>1000
+.g(@mdscreen,md);
+//屏幕>1200
+.g(@lgscreen,lg);
+//屏幕<768隐藏
+@media screen and (max-width:@smscreen){
+  .xs-hid{
+    display:none;
+  }
+}
+@media screen and (min-width:@smscreen) and (max-width:@mdscreen){
+  .sm-hid{
+    display:none;
+  }
+}
+@media screen and (min-width:@mdscreen) and (max-width:@lgscreen){
+  .md-hid{
+    display:none;
+  }
+}
